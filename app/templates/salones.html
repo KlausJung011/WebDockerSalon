@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Salones — NeoJardín{% endblock %}
+
+{% block content %}
+<section class="page-hero" id="salonesPageHero">
+    <div class="page-hero-bg"></div>
+    <div class="container">
+        <div class="page-hero-content">
+            <span class="section-tag">Nuestros Espacios</span>
+            <h1>Salones de NeoJardín</h1>
+            <p>Encuentra el espacio ideal para tu evento. Cada salón cuenta con características únicas.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="salonesListSection">
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-header-row">
+                <h2>Listado de Salones</h2>
+                <span class="badge-count">{{ salones|length }} espacios</span>
+            </div>
+            <table class="data-table" id="salonesTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre del Salón</th>
+                        <th>Capacidad</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for salon in salones %}
+                    <tr id="salonRow{{ salon.id }}">
+                        <td class="td-id">{{ salon.id }}</td>
+                        <td class="td-name">{{ salon.nombre }}</td>
+                        <td class="td-cap">
+                            <span class="cap-badge">👥 {{ salon.capacidad }}</span>
+                        </td>
+                        <td class="td-desc">{{ salon.descripcion }}</td>
+                        <td>
+                            <span class="badge {% if salon.disponible %}badge-available{% else %}badge-unavailable{% endif %}">
+                                {% if salon.disponible %}Disponible{% else %}Ocupado{% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main.editar_salon', id=salon.id) }}" class="btn-edit" id="editSalonBtn{{ salon.id }}">✏ Editar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

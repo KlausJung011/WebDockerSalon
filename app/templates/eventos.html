@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Eventos — NeoJardín{% endblock %}
+
+{% block content %}
+<section class="page-hero" id="eventosPageHero">
+    <div class="page-hero-bg"></div>
+    <div class="container">
+        <div class="page-hero-content">
+            <span class="section-tag">Experiencias</span>
+            <h1>Nuestros Eventos</h1>
+            <p>Desde íntimas celebraciones hasta grandes galas, tenemos el evento perfecto para ti.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="eventosListSection">
+    <div class="container">
+        <div class="events-detail-grid">
+            {% for evento in eventos %}
+            <div class="event-detail-card" id="eventoDetailCard{{ evento.id }}">
+                <div class="event-detail-number">0{{ loop.index }}</div>
+                <div class="event-detail-body">
+                    <h3>{{ evento.nombre }}</h3>
+                    <p>{{ evento.descripcion }}</p>
+                    <div class="event-detail-meta">
+                        <div class="meta-pill">
+                            <span class="meta-label">Capacidad</span>
+                            <span class="meta-val">👥 {{ evento.capacidad }} personas</span>
+                        </div>
+                        <div class="meta-pill meta-pill-accent">
+                            <span class="meta-label">Desde</span>
+                            <span class="meta-val">Bs. {{ "%.0f"|format(evento.precio) }}</span>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('main.nueva_reserva') }}" class="btn-primary" id="reservarEvento{{ evento.id }}Btn">Reservar este Evento</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

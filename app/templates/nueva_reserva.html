@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Nueva Reserva — NeoJardín{% endblock %}
+
+{% block content %}
+<section class="page-hero" id="newReservaHero">
+    <div class="page-hero-bg"></div>
+    <div class="container">
+        <div class="page-hero-content">
+            <span class="section-tag">Reservas</span>
+            <h1>Nueva Reserva</h1>
+            <p>Completa el formulario para reservar tu espacio en NeoJardín.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="newReservaSection">
+    <div class="container">
+        <div class="form-card form-card-lg" id="newReservaFormCard">
+            <form method="POST" action="{{ url_for('main.nueva_reserva') }}" id="newReservaForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cliente">Nombre del Cliente *</label>
+                        <input type="text" id="cliente" name="cliente" placeholder="Ej: María García" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="contacto">Contacto (Teléfono / Email) *</label>
+                        <input type="text" id="contacto" name="contacto" placeholder="Ej: +591 700 12345 o email@ejemplo.com" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_evento">Fecha del Evento *</label>
+                        <input type="date" id="fecha_evento" name="fecha_evento" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="salon_id">Salón *</label>
+                        <select id="salon_id" name="salon_id" required class="form-select">
+                            <option value="">— Selecciona un salón —</option>
+                            {% for salon in salones %}
+                            <option value="{{ salon.id }}">{{ salon.nombre }} (cap. {{ salon.capacidad }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="evento_id">Tipo de Evento *</label>
+                        <select id="evento_id" name="evento_id" required class="form-select">
+                            <option value="">— Selecciona un evento —</option>
+                            {% for evento in eventos %}
+                            <option value="{{ evento.id }}">{{ evento.nombre }} — Bs. {{ "%.0f"|format(evento.precio) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="notas">Notas adicionales</label>
+                        <textarea id="notas" name="notas" rows="3" placeholder="Decoración especial, requerimientos de audio, etc." class="form-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="{{ url_for('main.reservas') }}" class="btn-ghost" id="cancelNewReservaBtn">Cancelar</a>
+                    <button type="submit" class="btn-primary" id="submitNewReservaBtn">✦ Confirmar Reserva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

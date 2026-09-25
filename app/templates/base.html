@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NeoJardín — Salón de Eventos de lujo. Reserva tu espacio para bodas, galas y eventos corporativos.">
+    <title>{% block title %}NeoJardín — Salón de Eventos{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- ─── NAVBAR ─────────────────────────────────────────────────────────────── -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="{{ url_for('main.index') }}" class="nav-brand">
+            <span class="brand-icon">✦</span>
+            <span class="brand-text">NeoJardín</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="{{ url_for('main.index') }}" class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}">Inicio</a></li>
+            <li><a href="{{ url_for('main.salones') }}" class="nav-link {% if 'salon' in request.endpoint %}active{% endif %}">Salones</a></li>
+            <li><a href="{{ url_for('main.eventos') }}" class="nav-link {% if request.endpoint == 'main.eventos' %}active{% endif %}">Eventos</a></li>
+            <li><a href="{{ url_for('main.reservas') }}" class="nav-link {% if 'reserva' in request.endpoint %}active{% endif %}">Reservas</a></li>
+            <li><a href="{{ url_for('main.nueva_reserva') }}" class="btn-nav">Reservar Ahora</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ─── FLASH MESSAGES ──────────────────────────────────────────────────────── -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container" id="flashContainer">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">
+            <span>{{ message }}</span>
+            <button onclick="this.parentElement.remove()" class="flash-close">×</button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- ─── MAIN CONTENT ────────────────────────────────────────────────────────── -->
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────────────────── -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <span class="brand-icon">✦</span>
+            <span class="brand-text">NeoJardín</span>
+            <p>Donde cada momento se convierte en un recuerdo eterno.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Navegación</h4>
+            <a href="{{ url_for('main.index') }}">Inicio</a>
+            <a href="{{ url_for('main.salones') }}">Salones</a>
+            <a href="{{ url_for('main.eventos') }}">Eventos</a>
+            <a href="{{ url_for('main.reservas') }}">Reservas</a>
+        </div>
+        <div class="footer-contact">
+            <h4>Contacto</h4>
+            <p>📍 Av. Las Palmeras 420, Ciudad</p>
+            <p>📞 +591 700 00000</p>
+            <p>✉ info@neojardin.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 NeoJardín. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

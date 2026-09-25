@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block title %}Inicio — NeoJardín{% endblock %}
+
+{% block content %}
+
+<!-- ─── HERO ──────────────────────────────────────────────────────────────── -->
+<section class="hero" id="hero">
+    <div class="hero-bg">
+        <div class="hero-orb orb1"></div>
+        <div class="hero-orb orb2"></div>
+        <div class="hero-orb orb3"></div>
+    </div>
+    <div class="hero-content">
+        <div class="hero-badge">✦ Bienvenido a NeoJardín</div>
+        <h1 class="hero-title">
+            El escenario perfecto<br>
+            <em>para tu momento</em>
+        </h1>
+        <p class="hero-subtitle">
+            Espacios únicos donde la elegancia y la modernidad se fusionan 
+            para crear experiencias inolvidables.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('main.nueva_reserva') }}" class="btn-primary" id="heroReserveBtn">Reservar un Espacio</a>
+            <a href="{{ url_for('main.salones') }}" class="btn-ghost" id="heroViewBtn">Ver Salones</a>
+        </div>
+    </div>
+    <div class="hero-scroll">
+        <div class="scroll-indicator"></div>
+    </div>
+</section>
+
+<!-- ─── STATS ─────────────────────────────────────────────────────────────── -->
+<section class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card" id="statSalones">
+                <div class="stat-icon">🏛</div>
+                <div class="stat-number">{{ salones|length }}</div>
+                <div class="stat-label">Salones</div>
+            </div>
+            <div class="stat-card" id="statEventos">
+                <div class="stat-icon">🎭</div>
+                <div class="stat-number">{{ eventos|length }}</div>
+                <div class="stat-label">Tipos de Evento</div>
+            </div>
+            <div class="stat-card" id="statReservas">
+                <div class="stat-icon">📋</div>
+                <div class="stat-number">{{ total_reservas }}</div>
+                <div class="stat-label">Reservas</div>
+            </div>
+            <div class="stat-card" id="statAnios">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Años de Experiencia</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── SALONES PREVIEW ───────────────────────────────────────────────────── -->
+<section class="section" id="salonesSection">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Nuestros Espacios</span>
+            <h2>Salones Disponibles</h2>
+            <p>Cada rincón de NeoJardín fue diseñado para impresionar.</p>
+        </div>
+        <div class="cards-grid">
+            {% for salon in salones %}
+            <div class="card salon-card" id="salonCard{{ salon.id }}">
+                <div class="card-accent"></div>
+                <div class="card-body">
+                    <div class="card-top">
+                        <h3>{{ salon.nombre }}</h3>
+                        <span class="badge {% if salon.disponible %}badge-available{% else %}badge-unavailable{% endif %}">
+                            {% if salon.disponible %}Disponible{% else %}Ocupado{% endif %}
+                        </span>
+                    </div>
+                    <p class="card-desc">{{ salon.descripcion }}</p>
+                    <div class="card-meta">
+                        <span class="meta-item">👥 {{ salon.capacidad }} personas</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="section-cta">
+            <a href="{{ url_for('main.salones') }}" class="btn-outline" id="viewAllSalonesBtn">Ver todos los salones →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── EVENTOS PREVIEW ───────────────────────────────────────────────────── -->
+<section class="section section-alt" id="eventosSection">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Lo que Ofrecemos</span>
+            <h2>Tipos de Eventos</h2>
+            <p>Desde íntimas reuniones hasta grandes celebraciones.</p>
+        </div>
+        <div class="events-grid">
+            {% for evento in eventos %}
+            <div class="event-card" id="eventoCard{{ evento.id }}">
+                <div class="event-header">
+                    <h3>{{ evento.nombre }}</h3>
+                    <div class="event-price">Bs. {{ "%.0f"|format(evento.precio) }}</div>
+                </div>
+                <p>{{ evento.descripcion }}</p>
+                <div class="event-footer">
+                    <span>👥 Hasta {{ evento.capacidad }} personas</span>
+                    <a href="{{ url_for('main.nueva_reserva') }}" class="btn-sm" id="reserveEventoBtn{{ evento.id }}">Reservar</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA SECTION ───────────────────────────────────────────────────────── -->
+<section class="cta-section" id="ctaSection">
+    <div class="cta-orb"></div>
+    <div class="container">
+        <div class="cta-content">
+            <h2>¿Listo para crear algo extraordinario?</h2>
+            <p>Contáctanos y hagamos realidad el evento de tus sueños.</p>
+            <a href="{{ url_for('main.nueva_reserva') }}" class="btn-primary btn-lg" id="ctaReserveBtn">Hacer mi Reserva</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

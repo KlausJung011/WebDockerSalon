@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Reservas — NeoJardín{% endblock %}
+
+{% block content %}
+<section class="page-hero" id="reservasPageHero">
+    <div class="page-hero-bg"></div>
+    <div class="container">
+        <div class="page-hero-content">
+            <span class="section-tag">Gestión</span>
+            <h1>Reservas</h1>
+            <p>Historial y gestión de todas las reservas registradas en NeoJardín.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="reservasListSection">
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-header-row">
+                <h2>Historial de Reservas</h2>
+                <a href="{{ url_for('main.nueva_reserva') }}" class="btn-primary" id="newReservaBtn">+ Nueva Reserva</a>
+            </div>
+
+            {% if reservas %}
+            <table class="data-table" id="reservasTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Cliente</th>
+                        <th>Contacto</th>
+                        <th>Fecha del Evento</th>
+                        <th>Salón</th>
+                        <th>Evento</th>
+                        <th>Notas</th>
+                        <th>Registrado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in reservas %}
+                    <tr id="reservaRow{{ r.id }}">
+                        <td class="td-id">{{ r.id }}</td>
+                        <td class="td-name">{{ r.cliente }}</td>
+                        <td>{{ r.contacto }}</td>
+                        <td>{{ r.fecha_evento }}</td>
+                        <td>{{ r.salon.nombre }}</td>
+                        <td>{{ r.evento.nombre }}</td>
+                        <td class="td-desc">{{ r.notas or '—' }}</td>
+                        <td>{{ r.fecha_reserva.strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('main.eliminar_reserva', id=r.id) }}" onsubmit="return confirmDelete()" id="deleteReservaForm{{ r.id }}">
+                                <button type="submit" class="btn-danger" id="deleteReservaBtn{{ r.id }}">🗑 Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-state" id="emptyReservas">
+                <div class="empty-icon">📋</div>
+                <h3>Sin reservas aún</h3>
+                <p>Las reservas registradas aparecerán aquí.</p>
+                <a href="{{ url_for('main.nueva_reserva') }}" class="btn-primary" id="emptyNewReservaBtn">Crear primera reserva</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

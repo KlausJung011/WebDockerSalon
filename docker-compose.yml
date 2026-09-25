@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  neojardin-web:
+    container_name: neojardin_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      # Persist SQLite database across container restarts
+      - neojardin_db:/app/instance
+    environment:
+      - FLASK_ENV=production
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  neojardin_db:
+    name: neojardin_database
