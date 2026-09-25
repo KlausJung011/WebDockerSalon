@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   neojardin-web:
     container_name: neojardin_app
@@ -11,8 +9,11 @@ services:
     volumes:
       # Persist SQLite database across container restarts
       - neojardin_db:/app/instance
+      # Bind mount: cambios en código se reflejan sin reconstruir
+      - ./app:/app/app
     environment:
-      - FLASK_ENV=production
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
       - PYTHONUNBUFFERED=1
     restart: unless-stopped
     healthcheck:

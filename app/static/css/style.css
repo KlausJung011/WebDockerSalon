@@ -748,6 +748,107 @@ img { max-width: 100%; }
 .meta-val { font-weight: 700; font-size: 1rem; }
 .meta-pill-accent .meta-val { color: var(--gold-light); }
 
+/* ─── SOBRE NOSOTROS ────────────────────────────────── */
+.section-about { background: var(--bg-base); }
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+.about-text h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    margin: 0.8rem 0 1.2rem;
+    line-height: 1.2;
+}
+
+.about-lead {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.75;
+    border-left: 3px solid var(--violet);
+    padding-left: 1rem;
+}
+
+.about-body {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.about-stats-row {
+    display: flex;
+    gap: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.about-stat { display: flex; flex-direction: column; gap: 0.2rem; }
+
+.about-stat-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.about-stat-label { color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+.about-values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.value-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.value-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--violet), var(--magenta));
+    transform: scaleX(0);
+    transition: var(--transition);
+}
+
+.value-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
+}
+
+.value-card:hover::after { transform: scaleX(1); }
+
+.value-icon { font-size: 1.6rem; margin-bottom: 0.7rem; display: block; }
+.value-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.value-card p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; }
+
+@media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+@media (max-width: 480px) {
+    .about-stats-row { gap: 1.2rem; flex-wrap: wrap; }
+    .about-values { grid-template-columns: 1fr; }
+}
+
 /* ─── CTA SECTION ───────────────────────────────────── */
 .cta-section {
     padding: 6rem 0;
